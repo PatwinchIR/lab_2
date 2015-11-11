@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    {% if book %}
+    <title>Details of {{ book.Title }}</title>
+    {% endif %}
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+</head>
+
+<body>
+    {% if book %}
+    <div id="content" class="colM">
+        <div id="content-main">
+                <div>
+                    <fieldset class="module aligned ">
+                        <div class="form-row field-ISBN">
+                            <div>
+                                <label class="required" for="id_ISBN">ISBN:</label>
+                                {{ book.ISBN }}
+                            </div>
+                        </div>
+                        <div class="form-row field-Title">
+                            <div>
+                                <label class="required" for="id_Title">Title:</label>
+                                {{ book.Title }}
+                            </div>
+                        </div>
+                        <div class="form-row field-AuthorID">
+                            <div>
+                                <label class="required" for="id_AuthorID">AuthorID:</label>
+                                <div class="related-widget-wrapper">
+                                    {{book.AuthorID}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row field-Publisher">
+                            <div>
+                                <label class="required" for="id_Publisher">Publisher:</label>
+                                {{ book.Publisher }}
+                            </div>
+                        </div>
+                        <div class="form-row field-PublishDate">
+                            <div>
+                                <label class="required" for="id_PublishDate">PublishDate:</label>
+                                {{ book.PublishDate }}
+                            </div>
+                        </div>
+                        <div class="form-row field-Price">
+                            <div>
+                                <label class="required" for="id_Price">Price:</label>
+                                {{ book.Price }}
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+        </div>
+        <br class="clear" />
+    </div>
+    {% endif %}
+    {% if author %}
+    <div id="container">
+        <!-- Content -->
+        <div id="content" class="colM">
+            <div id="content-main">
+                    <div>
+                        <fieldset class="module aligned ">
+                            <div class="form-row field-AuthorID">
+                                <div>
+                                    <label class="required" for="id_AuthorID">AuthorID:</label>
+                                    {{ author.AuthorID }}
+                                </div>
+                            </div>
+                            <div class="form-row field-Name">
+                                <div>
+                                    <label class="required" for="id_Name">Name:</label>
+                                    {{ author.Name }}
+                                </div>
+                            </div>
+                            <div class="form-row field-Age">
+                                <div>
+                                    <label class="required" for="id_Age">Age:</label>
+                                    {{ author.Age }}
+                                </div>
+                            </div>
+                            <div class="form-row field-Country">
+                                <div>
+                                    <label class="required" for="id_Country">Country:</label>
+                                    {{ author.Country }}
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+            </div>
+            <br class="clear" />
+        </div>
+        <!-- END Content -->
+        <div id="footer"><a href="/" class="default" style='font-size:50px;'>Back</a></div>
+    </div>
+    {% endif %}
+</body>
+
+</html>

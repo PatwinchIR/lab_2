@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <title>Add author</title>
+<head>
+    <title>Add author</title>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+</head>
+
+<body class="popup  app-libman model-author change-form">
+    <!-- Container -->
+    {% if bad_parameters %}
+    <h1 style='margin-left:20px;color:red;'>Your author's info is not well formatted. Please try again!</h1>
+    {% endif %}
+    <div id="container">
+        <!-- Content -->
+        <div id="content" class="colM">
+            <h1>Add author</h1>
+            <div id="content-main">
+                <form action="." method="post" id="author_form" novalidate>
+                    {% csrf_token %}
+                    <div>
+                        <input type="hidden" name="_popup" value="1" />
+                        <input type="hidden" name="_to_field" value="AuthorID" />
+                        <fieldset class="module aligned ">
+                            <div class="form-row field-AuthorID">
+                                <div>
+                                    <label class="required" for="id_AuthorID">AuthorID:</label>
+                                    <input class="vTextField" id="id_AuthorID" maxlength="50" name="AuthorID" type="text" placeholder='Integer'/>
+                                </div>
+                            </div>
+                            <div class="form-row field-Name">
+                                <div>
+                                    <label class="required" for="id_Name">Name:</label>
+                                    <input class="vTextField" id="id_Name" maxlength="50" name="Name" type="text" />
+                                </div>
+                            </div>
+                            <div class="form-row field-Age">
+                                <div>
+                                    <label class="required" for="id_Age">Age:</label>
+                                    <input class="vIntegerField" id="id_Age" name="Age" type="text" placeholder='Integer'/>
+                                </div>
+                            </div>
+                            <div class="form-row field-Country">
+                                <div>
+                                    <label class="required" for="id_Country">Country:</label>
+                                    <input class="vTextField" id="id_Country" maxlength="50" name="Country" type="text" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="submit-row">
+                            <input type="submit" value="Save" class="default" name="_save" />
+                            <a href="/" class="default">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br class="clear" />
+        </div>
+        <!-- END Content -->
+        <div id="footer"></div>
+    </div>
+    <!-- END Container -->
+</body>
+
+</html>

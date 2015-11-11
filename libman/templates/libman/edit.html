@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    {% if book %}
+    <title>Edit {{book.Title }}</title>
+    {% endif %}
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+</head>
+
+<body>
+    {% if bad_parameters %}
+    <h1 style='margin-left:20px;color:red;'>Your book's info is not well formatted. Please try again!</h1>
+    <a style='margin-left:20px;' href="/" class="default">Back</a>
+    {% endif %}
+    {% if book %}
+    <div id="content" class="colM">
+        <div id="content-main">
+            <form action="." method="post" id="book_form" novalidate>
+                {% csrf_token %}
+                <div>
+                    <fieldset class="module aligned ">
+                        <div class="form-row field-ISBN">
+                            <div>
+                                <label class="required" for="id_ISBN">ISBN:</label>
+                                {{ book.ISBN }}
+                            </div>
+                        </div>
+                        <div class="form-row field-Title">
+                            <div>
+                                <label class="required" for="id_Title">Title:</label>
+                                {{ book.Title }}
+                            </div>
+                        </div>
+                        <div class="form-row field-AuthorID">
+                            <div>
+                                <label class="required" for="id_AuthorID">AuthorID:</label>
+                                <div class="related-widget-wrapper">
+                                    {{book.AuthorID}}
+                                    <select name='update_book_authorid'>
+                                        {% for author in author_list %}
+                                        <option value={{author.AuthorID}}>{{author.AuthorID}}: {{author.Name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row field-Publisher">
+                            <div>
+                                <label class="required" for="id_Publisher">Publisher:</label>
+                                <input name='update_book_publisher' type='text' value='{{ book.Publisher }}' />
+                            </div>
+                        </div>
+                        <div class="form-row field-PublishDate">
+                            <div>
+                                <label class="required" for="id_PublishDate">PublishDate:</label>
+                                {{ book.PublishDate }}
+                                <input name='update_book_publishdate' type='text' placeholder='Format: yyyy-mm-dd' />
+                            </div>
+                        </div>
+                        <div class="form-row field-Price">
+                            <div>
+                                <label class="required" for="id_Price">Price:</label>
+                                <input name='update_book_price' type='text' value='{{ book.Price }}' />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="submit-row">
+                        <input type="submit" value="Save" class="default" name="save">
+                        <a href="/" class="default">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br class="clear" />
+    </div>
+    {% endif %}
+</body>
+
+</html>

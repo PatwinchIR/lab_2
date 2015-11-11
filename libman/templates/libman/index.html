@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<title>d_d Book Manager</title>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" />
+</head>
+
+<body>
+    <h1 style='font-size:50px;margin-top:20px;margin-bottom:50px;margin-left:30%;'>d_d Book Manager</h1> {% if book_list %} {% csrf_token %}
+    <table>
+        {% for i in book_list %}
+        <tr>
+            <td>
+                <ul>
+                    <li><a href="{% url 'libman:details' i.ISBN %}">{{ i.Title }}</a></li>
+                </ul>
+            </td>
+            <td>
+                <form action='delete/' method='GET'>
+                    <input type='hidden' name='delete_book_ISBN' value={{ i.ISBN }} />
+                    <input type='submit' value='Delete' />
+                </form>
+            </td>
+            <td>
+                <form action='edit/' method='GET'>
+                    <input type='hidden' name='update_book_ISBN' value={{ i.ISBN }} />
+                    <input type='submit' value='Edit' />
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No books are available.</p>
+    {% endif %}
+    <div id="content" class="colM">
+        <div id="content-main" style='margin-bottom:20px;'>
+            <form action="." method='POST' id='author_search'>
+                {% csrf_token %}
+                <input type='text' name='author_name' />
+                <input type='submit' value='Author Search' />
+            </form>
+            <label>
+                Exist Authors: {% for author in author_list %} {{author.Name}} {% endfor %}
+            </label>
+            {% if author_lib %}
+            <p>Author {{author_name}}'s book(s)</p>
+            <ul>
+                {% for j in author_lib %}
+                <li><a href="{% url 'libman:details' j.ISBN %}">{{ j.Title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% if author_empty %}
+            <p>Author {{author_name}} not found.</p>
+            {% endif %}
+        </div>
+    </div>
+    {% if bad_parameters %}
+    <h1 style='margin-left:20px;color:red;'>Your book's info is not well formatted. Please try again!</h1>
+    {% endif %}
+    <div id="content" class="colM">
+        <div id="content-main">
+            <form action="add_book/" method="GET" id="new_book_form" novalidate>
+                <input type='hidden' name='csrfmiddlewaretoken' value='ruGXkxOX0knTGEVHiHgM4OzPXj2RGojf' />
+                <div>
+                    <fieldset class="module aligned ">
+                        <div class="form-row field-ISBN">
+                            <div>
+                                <label class="required" for="id_ISBN">ISBN:</label>
+                                <input name='add_book_isbn' type='text' />
+                            </div>
+                        </div>
+                        <div class="form-row field-Title">
+                            <div>
+                                <label class="required" for="id_Title">Title:</label>
+                                <input name='add_book_title' type='text' />
+                            </div>
+                        </div>
+                        <div class="form-row field-AuthorID">
+                            <div>
+                                <label class="required" for="id_AuthorID">AuthorID:</label>
+                                <div class="related-widget-wrapper">
+                                    <select name='add_book_authorid'>
+                                        {% for author in author_list %}
+                                        <option value={{author.AuthorID}}>{{author.AuthorID}}: {{author.Name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <a class="related-widget-wrapper-link add-related" id="add_author" href="add_author/" title="Add another author">
+                                        <img src="/static/admin/img/icon_addlink.gif" width="10" height="10" alt="Add">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row field-Publisher">
+                            <div>
+                                <label class="required" for="id_Publisher">Publisher:</label>
+                                <input name='add_book_publisher' type='text' />
+                            </div>
+                        </div>
+                        <div class="form-row field-PublishDate">
+                            <div>
+                                <label class="required" for="id_PublishDate">PublishDate:</label>
+                                <input name='add_book_publishdate' type='text' placeholder='Format: yyyy-mm-dd' />
+                            </div>
+                        </div>
+                        <div class="form-row field-Price">
+                            <div>
+                                <label class="required" for="id_Price">Price:</label>
+                                <input name='add_book_price' type='text' />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="submit-row">
+                        <input type="submit" value="Add Book" class="default" name="add">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <br class="clear" />
+    </div>
+    </div>
+</body>
+
+</html>
